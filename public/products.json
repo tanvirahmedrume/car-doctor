@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "Car Engine Plug",
+    "category": "Engine",
+    "price": 1200,
+    "rating": 4.5,
+    "img": "https://i.ibb.co.com/xtF6zwR8/1.png"
+  },
+  {
+    "id": 2,
+    "title": "Car Air Filter",
+    "category": "Cooling",
+    "price": 1500,
+    "rating": 4.3,
+    "img": "https://i.ibb.co.com/LhDphzRz/2.png"
+  },
+  {
+    "id": 3,
+    "title": "Car Cooling Leg Light",
+    "category": "Lighting",
+    "price": 900,
+    "rating": 4.2,
+    "img": "https://i.ibb.co.com/1tbWjnF2/3.png"
+  },
+  {
+    "id": 4,
+    "title": "Car Suspension",
+    "category": "Suspension",
+    "price": 5000,
+    "rating": 4.6,
+    "img": "https://i.ibb.co.com/5xGBbdMX/4.png"
+  },
+  {
+    "id": 5,
+    "title": "Car Tire",
+    "category": "Tire",
+    "price": 3000,
+    "rating": 4.4,
+    "img": "https://i.ibb.co.com/jkpFtRMN/5.png"
+  },
+  {
+    "id": 6,
+    "title": "Car Battery",
+    "category": "Battery",
+    "price": 7000,
+    "rating": 4.7,
+    "img": "https://i.ibb.co.com/Q3dwQLVw/6.png"
+  }
+]
