@@ -31,7 +31,7 @@ const Navbar = () => {
     </Link>
   </li>
   <li>
-    <Link className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2">
+    <Link to={'/service'} className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2">
       Services
     </Link>
   </li>

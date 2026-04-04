@@ -1,10 +1,11 @@
 import React from "react";
-import checkout from "../../../public/assets/images/checkout/checkout.png";
-import breadcrumbs from "../../../public/assets/icons/breadcrume.svg";
+
 import banner3 from "../../../public/assets/images/banner/3.jpg";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { FaRegFilePdf } from "react-icons/fa6";
 import logo from "../../../public/assets/logo.svg";
+import { Banner } from "../../components/Banner/Banner";
+import { Link } from "react-router-dom";
 
 const ServiceDetails = () => {
   // 🔹 Service List
@@ -57,28 +58,7 @@ const ServiceDetails = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 mt-10 lg:mt-20">
-      {/* Banner */}
-      <div className="relative my-10 lg:my-20">
-        <img
-          src={checkout}
-          className="w-full h-40 sm:h-56 lg:h-full object-cover rounded-md"
-        />
-
-        <div className="absolute inset-0 bg-linear-to-r from-black via-black/60 to-transparent rounded-md"></div>
-
-        <h4 className="absolute top-1/2 left-5 lg:left-20 -translate-y-1/2 text-lg sm:text-2xl lg:text-4xl text-white font-semibold">
-          Service Details
-        </h4>
-
-        <img
-          src={breadcrumbs}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 lg:w-40 w-52"
-        />
-
-        <p className="absolute bottom-2 text-white text-sm left-1/2 -translate-x-1/2">
-          Home {">"} Service Details
-        </p>
-      </div>
+      <Banner title="Service Details"></Banner>
 
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-10">
@@ -224,8 +204,8 @@ const ServiceDetails = () => {
 
           <h2 className="text-2xl font-bold">Price $250</h2>
 
-          <button className="bg-[#FF3811] text-white w-full py-3 rounded-md">
-            Process to checkout
+          <button className="bg-[#FF3811] text-white w-full py-3 rounded-md mb-5">
+            <Link to={"/checkout"}>Process to checkout</Link>
           </button>
         </div>
       </div>
