@@ -10,11 +10,11 @@ const Slide = ({ id, img, prev, next }) => {
     <div id={id} className="carousel-item relative w-full">
       <img
         src={img}
-        className="w-full h-[400px] lg:h-[650px] object-cover rounded-md"
+        className="w-full h-100 lg:h-162.5 object-cover rounded-md"
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent rounded-md"></div>
+      <div className="absolute inset-0 bg-linear-to-r from-black via-black/50 to-transparent rounded-md"></div>
 
       {/* Content */}
       <div className="absolute px-5 lg:px-20 w-full lg:w-1/2 h-full flex flex-col justify-center gap-5 ">
