@@ -1,18 +1,36 @@
 import React, { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
+import { Link } from "react-router-dom";
 
 const Services = () => {
   const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("./services.json")
+    fetch("http://localhost:5000/services")
       .then((res) => res.json())
-      .then((data) => setServices(data));
+      .then((data) => {
+        // শুধু প্রথম ৩টি সার্ভিস দেখাবে হোম পেজে
+        setServices(data.slice(0, 3));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF3811] mx-auto"></div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <div className="flex flex-col items-center text-center lg:w-[600px] mx-auto">
+    <div className="py-12">
+      <div className="flex flex-col items-center text-center lg:w-[600px] mx-auto px-4">
         <h4 className="text-[#FF3811] font-semibold uppercase">Service</h4>
         <h1 className="text-2xl lg:text-5xl font-bold mt-2">
           Our Service Area
@@ -24,17 +42,19 @@ const Services = () => {
       </div>
 
       {/* SERVICE CARD */}
-      <div className="grid mx-5 md:grid-cols-2 lg:grid-cols-3 gap-x-5 ">
-        {services.map((service, index) => (
-          <ServiceCard key={index} service={service} />
+      <div className="grid mx-5 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+        {services.map((service) => (
+          <ServiceCard key={service._id} service={service} />
         ))}
-
       </div>
-              <div className="flex justify-center">
+      
+      <div className="flex justify-center">
+        <Link to={'/all-services'}>
           <button className="btn my-10 border border-orange-600 text-orange-600 bg-transparent hover:bg-orange-600 hover:text-white">
             More Services
           </button>
-        </div>
+        </Link>
+      </div>
     </div>
   );
 };

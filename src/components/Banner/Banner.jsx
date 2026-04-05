@@ -5,7 +5,7 @@ export const Banner = ({title}) => {
   return (
     <div>
               {/* Banner */}
-              <div className="relative my-10 lg:my-20">
+              <div className="relative my-10">
                 <img
                   src={checkout}
                   className="w-full h-40 sm:h-56 lg:h-full object-cover rounded-md"

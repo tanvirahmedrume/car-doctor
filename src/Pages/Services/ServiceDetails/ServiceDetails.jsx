@@ -1,23 +1,24 @@
 import React from "react";
-
-import banner3 from "../../../public/assets/images/banner/3.jpg";
+import banner3 from "../../../../public/assets/images/banner/3.jpg";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { FaRegFilePdf } from "react-icons/fa6";
-import logo from "../../../public/assets/logo.svg";
-import { Banner } from "../../components/Banner/Banner";
-import { Link } from "react-router-dom";
+import logo from "../../../../public/assets/logo.svg";
+import { Banner } from "../../../components/Banner/Banner";
+import { Link, useLoaderData } from "react-router-dom";
 
 const ServiceDetails = () => {
-  // 🔹 Service List
-  const services = [
-    "Full Car Repair",
-    "Engine Repair",
-    "Automatic Services",
-    "Engine Oil Change",
-    "Battery Charge",
-  ];
+  const service = useLoaderData(); // singular নাম দিন কারণ এটি একটি অবজেক্ট
+  console.log("Service Data:", service); // ডিবাগ করার জন্য দেখুন ডাটা আসছে কিনা
+  
+  const {
+    img,
+    title,
+    price,
+    description,
+    facility  // facility হলো array
+  } = service || {}; // যদি service undefined হয় তাহলে error এড়াতে
 
-  // 🔹 Download Items
+  // Download Items
   const downloads = [
     {
       title: "Our Brochure",
@@ -29,32 +30,30 @@ const ServiceDetails = () => {
     },
   ];
 
-  // 🔹 Feature Cards
-  const features = [
-    {
-      title: "Instant Car Services",
-      desc: "It uses a dictionary of over 200 Latin words.",
-    },
-    {
-      title: "24/7 Quality Service",
-      desc: "It uses a dictionary of over 200 Latin words.",
-    },
-    {
-      title: "Easy Customer Service",
-      desc: "It uses a dictionary of over 200 Latin words.",
-    },
-    {
-      title: "Quality Cost Service",
-      desc: "It uses a dictionary of over 200 Latin words.",
-    },
+  // Services List
+  const serviceList = [
+    "Full Car Repair",
+    "Engine Repair",
+    "Automatic Services",
+    "Engine Oil Change",
+    "Battery Charge",
   ];
 
-  // 🔹 Steps
+  // Steps
   const steps = [
     { step: 1, title: "STEP ONE" },
     { step: 2, title: "STEP TWO" },
     { step: 3, title: "STEP THREE" },
   ];
+
+  // যদি ডাটা লোড না হয়
+  if (!service) {
+    return (
+      <div className="flex justify-center items-center h-96">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#FF3811] mx-auto"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 mt-10 lg:mt-20">
@@ -64,32 +63,31 @@ const ServiceDetails = () => {
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-10">
         {/* LEFT */}
         <div className="lg:col-span-7">
-          <img src={banner3} className="rounded-xl w-full" />
+          <img src={img} className="rounded-xl w-full" alt={title} />
 
           <h1 className="my-6 lg:my-10 text-2xl lg:text-4xl font-semibold">
-            Unique Car Engine Service
+            {title}
           </h1>
 
           <p className="text-[#737373] text-sm mb-4">
-            There are many variations of passages of Lorem Ipsum available, but
-            the majority have suffered alteration in some form, by injected
-            humour, or randomised words which don't look even slightly
-            believable. If you are going to use a passage of Lorem Ipsum, you
-            need to be sure there isn't anything embarrassing hidden in the
-            middle of text.
+            {description}
           </p>
 
-          {/* Features */}
+          {/* Features - FIXED */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-10">
-            {features.map((item, i) => (
-              <div
-                key={i}
-                className="bg-[#F3F3F3] px-6 py-5 rounded-xl border-t-2 border-red-400 hover:shadow-xl transition hover:-translate-y-1"
-              >
-                <h5 className="font-semibold mb-2">{item.title}</h5>
-                <p className="text-sm text-[#737373]">{item.desc}</p>
-              </div>
-            ))}
+            {facility && facility.length > 0 ? (
+              facility.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#F3F3F3] px-6 py-5 rounded-xl border-t-2 border-red-400 hover:shadow-xl transition hover:-translate-y-1"
+                >
+                  <h5 className="font-semibold mb-2">{item.name}</h5>
+                  <p className="text-sm text-[#737373]">{item.details}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500">No facility information available</p>
+            )}
           </div>
 
           <p className="text-[#737373] text-sm my-4">
@@ -113,6 +111,7 @@ const ServiceDetails = () => {
             need to be sure there isn't anything embarrassing hidden in the
             middle of text.
           </p>
+          
           {/* Steps */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {steps.map((item) => (
@@ -134,7 +133,7 @@ const ServiceDetails = () => {
             ))}
           </div>
 
-          <img src={banner3} className="rounded-xl mt-10 w-full mb-10" />
+          <img src={banner3} className="rounded-xl mt-10 w-full mb-10" alt="Banner" />
         </div>
 
         {/* RIGHT */}
@@ -143,7 +142,7 @@ const ServiceDetails = () => {
           <div className="bg-[#F3F3F3] p-5 rounded-md space-y-3">
             <h3 className="font-semibold text-xl">Services</h3>
 
-            {services.map((service, i) => (
+            {serviceList.map((service, i) => (
               <button
                 key={i}
                 className="bg-white hover:bg-[#FF3811] hover:text-white w-full flex justify-between items-center px-4 py-2 rounded-md transition"
@@ -178,7 +177,7 @@ const ServiceDetails = () => {
 
           {/* Offer */}
           <div className="bg-black p-4 rounded-md flex flex-col text-center justify-center h-96">
-            <img src={logo} className="mx-auto w-20 mb-3" />
+            <img src={logo} className="mx-auto w-20 mb-3" alt="Logo" />
 
             <p className="text-white mb-4 text-2xl font-semibold">
               Need Help? We Are Here
@@ -187,9 +186,9 @@ const ServiceDetails = () => {
             <div className="relative">
               <div className="bg-white rounded-xl pt-6 pb-14">
                 <h2 className="text-xl font-semibold">
-                  <span className="text-[#FF3811] ">Car Doctor</span> Special
+                  <span className="text-[#FF3811]">Car Doctor</span> Special
                 </h2>
-                <p className="text-sm text-gray-400 font-semibold ">
+                <p className="text-sm text-gray-400 font-semibold">
                   Save up to <span className="text-[#FF3811]">60% OFF</span>
                 </p>
               </div>
@@ -202,10 +201,10 @@ const ServiceDetails = () => {
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold">Price $250</h2>
+          <h2 className="text-2xl font-bold">Price ${price}</h2>
 
           <button className="bg-[#FF3811] text-white w-full py-3 rounded-md mb-5">
-            <Link to={"/checkout"}>Process to checkout</Link>
+            <Link to={`/checkout/${service?._id}`}>Process to checkout</Link>
           </button>
         </div>
       </div>

@@ -5,25 +5,30 @@ const Forms = ({
   showContactFields = false,
   handleSubmit,
 }) => {
+
+
   return (
     <div className="w-full max-w-5xl mx-auto px-4 mb-20">
       <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         {/* Header Section with Gradient */}
         <div className="bg-gradient-to-r from-[#FF3811] to-[#FF6B3A] px-8 py-6">
           <h2 className="text-2xl font-bold text-white">
-            {showServicesFields ? "Add New Service" : showContactFields ? "Checkout" : "📝 Get in Touch"}
+            {showServicesFields
+              ? "Add New Service"
+              : showContactFields
+                ? "Checkout"
+                : "📝 Get in Touch"}
           </h2>
           <p className="text-white/80 text-sm mt-1">
-            {showServicesFields 
-              ? "Fill out the details below to add a new service" 
-              : showContactFields 
-              ? "Complete your purchase by providing your information" 
-              : "We'd love to hear from you"}
+            {showServicesFields
+              ? "Fill out the details below to add a new service"
+              : showContactFields
+                ? "Complete your purchase by providing your information"
+                : "We'd love to hear from you"}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
-          
           {/* AddNewService Page - Service fields only */}
           {showServicesFields === true && (
             <div className="space-y-5">
@@ -195,13 +200,18 @@ const Forms = ({
               overflow-hidden"
             >
               <span className="relative z-10">
-                {showServicesFields ? "Add Service" : showContactFields ? "Complete Checkout" : "📤 Send Message"}
+                {showServicesFields
+                  ? "Add Service"
+                  : showContactFields
+                    ? "Complete Checkout"
+                    : "📤 Send Message"}
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#e6320f] to-[#FF5A2A] 
-              transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+              <div
+                className="absolute inset-0 bg-gradient-to-r from-[#e6320f] to-[#FF5A2A] 
+              transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+              ></div>
             </button>
           </div>
-
         </form>
       </div>
     </div>
