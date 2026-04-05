@@ -47,9 +47,9 @@ const Services = () => {
           <ServiceCard key={service._id} service={service} />
         ))}
       </div>
-      
+
       <div className="flex justify-center">
-        <Link to={'/all-services'}>
+        <Link to={"/all-services"}>
           <button className="btn my-10 border border-orange-600 text-orange-600 bg-transparent hover:bg-orange-600 hover:text-white">
             More Services
           </button>

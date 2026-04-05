@@ -7,9 +7,9 @@ const ServiceCard = ({ service }) => {
   return (
     <div className="border border-gray-200 p-4 rounded-xl shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-between h-full">
       <div className="overflow-hidden rounded-lg">
-        <img 
-          src={img} 
-          alt={title} 
+        <img
+          src={img}
+          alt={title}
           className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
         />
       </div>

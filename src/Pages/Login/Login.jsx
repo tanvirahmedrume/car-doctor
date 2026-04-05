@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { FaGooglePlusG } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import login from "../../../public/assets/images/login/login.svg";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // Handle Login
   const handleLogin = (e) => {
@@ -15,12 +16,12 @@ const Login = () => {
     const email = from.email.value;
     const password = from.password.value;
 
-    console.log(email, password);
-
     signIn(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        if(user){
+          navigate('/all-services')
+        }
       })
       .catch((error) => console.log(error));
   };

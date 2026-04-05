@@ -7,16 +7,15 @@ import { Banner } from "../../../components/Banner/Banner";
 import { Link, useLoaderData } from "react-router-dom";
 
 const ServiceDetails = () => {
-  const service = useLoaderData(); // singular নাম দিন কারণ এটি একটি অবজেক্ট
-  console.log("Service Data:", service); // ডিবাগ করার জন্য দেখুন ডাটা আসছে কিনা
+  const service = useLoaderData(); // 
   
   const {
     img,
     title,
     price,
     description,
-    facility  // facility হলো array
-  } = service || {}; // যদি service undefined হয় তাহলে error এড়াতে
+    facility  
+  } = service || {};
 
   // Download Items
   const downloads = [

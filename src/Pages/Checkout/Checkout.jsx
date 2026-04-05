@@ -1,11 +1,12 @@
 import React from "react";
 import { Banner } from "../../components/Banner/Banner";
 import Forms from "../../components/Forms/Forms";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Checkout = () => {
   const service = useLoaderData();
+  const navigate = useNavigate();
   const { title, _id, price, img } = service || {};
 
   const handleSubmit = (e) => {
@@ -43,6 +44,7 @@ const Checkout = () => {
             icon: "success",
             draggable: true,
           });
+          navigate('/')
         }
       });
 

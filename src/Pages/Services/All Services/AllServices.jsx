@@ -8,7 +8,7 @@ const AllServices = () => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    
+
     fetch("http://localhost:5000/services", { signal: abortController.signal })
       .then((res) => {
         if (!res.ok) {
@@ -45,8 +45,8 @@ const AllServices = () => {
     return (
       <div className="text-center text-red-600 py-20">
         <p className="text-xl font-semibold">Error: {error}</p>
-        <button 
-          onClick={() => window.location.reload()} 
+        <button
+          onClick={() => window.location.reload()}
           className="mt-4 px-6 py-2 bg-[#FF3811] text-white rounded hover:bg-[#ff5722] transition-colors"
         >
           Try Again
