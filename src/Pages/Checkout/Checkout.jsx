@@ -18,6 +18,7 @@ const Checkout = () => {
     const email = form.email?.value || "";
 
     const bookingData = {
+      img: img,
       serviceId: _id,
       serviceTitle: title,
       price: price,

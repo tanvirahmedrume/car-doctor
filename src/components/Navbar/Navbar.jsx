@@ -28,39 +28,54 @@ const Navbar = () => {
   }, []);
 
   const NavLinks = (
-    <>
-      <li>
-        <Link
-          to={"/"}
-          className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2"
-        >
-          Home
-        </Link>
-      </li>
-      <li>
-        <Link className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2">
-          About
-        </Link>
-      </li>
-      <li>
-        <Link
-          to={"/all-services"}
-          className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2"
-        >
-          Services
-        </Link>
-      </li>
-      <li>
-        <Link className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2">
-          Blog
-        </Link>
-      </li>
-      <li>
-        <Link className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2">
-          Contact
-        </Link>
-      </li>
-    </>
+<>
+  <li>
+    <Link
+      to="/"
+      className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2"
+    >
+      Home
+    </Link>
+  </li>
+
+  <li>
+    <Link className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2">
+      About
+    </Link>
+  </li>
+
+  <li>
+    <Link
+      to="/all-services"
+      className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2"
+    >
+      Services
+    </Link>
+  </li>
+
+  <li>
+    <Link className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2">
+      Blog
+    </Link>
+  </li>
+
+  <li>
+    <Link className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2">
+      Contact
+    </Link>
+  </li>
+
+  {user?.email && (
+    <li>
+      <Link
+        to="/bookings"
+        className="hover:underline transform transition-transform duration-500 ease-out hover:-translate-y-2"
+      >
+        My Bookings
+      </Link>
+    </li>
+  )}
+</>
   );
 
   return (
