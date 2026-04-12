@@ -30,7 +30,7 @@ const Services = () => {
 
   return (
     <div className="py-12">
-      <div className="flex flex-col items-center text-center lg:w-[600px] mx-auto px-4">
+      <div className="flex flex-col items-center text-center lg:w-150 mx-auto px-4">
         <h4 className="text-[#FF3811] font-semibold uppercase">Service</h4>
         <h1 className="text-2xl lg:text-5xl font-bold mt-2">
           Our Service Area

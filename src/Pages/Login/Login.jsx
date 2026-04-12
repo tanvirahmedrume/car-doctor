@@ -1,26 +1,39 @@
 import React, { useContext } from "react";
 import { FaGooglePlusG } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,useNavigate, useLocation } from "react-router-dom";
 import login from "../../../public/assets/images/login/login.svg";
 import { AuthContext } from "../../providers/AuthProvider";
+import axios from "axios";
+
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
-
+const location = useLocation();
   // Handle Login
   const handleLogin = (e) => {
     e.preventDefault();
     const from = e.target;
     const email = from.email.value;
     const password = from.password.value;
+      
+      const path = location.state?.from?.pathname || "/all-services";
+    
 
     signIn(email, password)
       .then((result) => {
-        const user = result.user;
-        if(user){
-          navigate('/all-services')
+        const loggedInuser = result.user;
+        if(loggedInuser){
+        //  navigate(path, { replace: true });
+        // getaccesstoken
+        const user = {email}
+        axios.post('http://localhost:5000/jwt',user)
+        .then(res =>{
+          console.log(res.data);
+          
+        })
+
         }
       })
       .catch((error) => console.log(error));
