@@ -3,97 +3,98 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { Banner } from "../../components/Banner/Banner";
 import BookingRow from "./BookingRow";
 import Swal from "sweetalert2";
+import axiosSecure from "../../api/axiosSecure";
 
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
 
-  const url = `http://localhost:5000/booking?email=${user?.email}`;
-
+  // ✅ GET BOOKINGS
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setBookings(data));
+    if (!user?.email) return; // 🔥 important (user না আসা পর্যন্ত call না)
+
+    axiosSecure
+      .get(`/booking?email=${user.email}`)
+      .then((res) => {
+        setBookings(res.data);
+      })
+      .catch((err) => {
+        console.log("ERROR:", err);
+      });
   }, [user?.email]);
 
+  // ✅ UPDATE STATUS
+  const handleBookingConfirme = (id) => {
+    axiosSecure
+      .patch(`/booking/${id}`, { status: "completed" })
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          Swal.fire({
+            title: "Confirm successful",
+            icon: "success",
+          });
 
-  const handleBookingConfirme = (id) =>{
-      fetch(`http://localhost:5000/booking/${id}`,{
-        method: 'PATCH',
-        headers: {
-          'content-type': 'application/json' 
-        },
-        body: JSON.stringify({status: 'completed'})
-      })
-      .then(res => res.json())
-      .then (data => {
-        if (data.modifiedCount > 0) {
+          // UI update safely
+          const updatedBookings = bookings.map((b) =>
+            b._id === id ? { ...b, status: "completed" } : b
+          );
 
-              Swal.fire({
-              title: "Confirme successfull",
-              icon: "success",
-              draggable: true,
-            });
-          // Update Status
-          const remaining = bookings.filter(bookings => bookings._id !== id);
-          const updated = bookings.find(booking => booking._id === id);
-          updated.status = 'completed'
-          const newBooking = [updated, ...remaining];
-          setBookings(newBooking);
+          setBookings(updatedBookings);
         }
       })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-
-  // Delete function
+  // ✅ DELETE
   const handleDelete = (id) => {
-    const proceed = confirm(`Are You sure? you want to be delete.`);
+    const proceed = confirm("Are you sure you want to delete?");
 
     if (proceed) {
-      fetch(`http://localhost:5000/booking/${id}`, {
-        method: "DELETE",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.deletedCount > 0) {
+      axiosSecure
+        .delete(`/booking/${id}`)
+        .then((res) => {
+          if (res.data.deletedCount > 0) {
             Swal.fire({
-              title: "Deleted successfull",
+              title: "Deleted successfully",
               icon: "success",
-              draggable: true,
             });
 
-
-            const remaining = bookings.filter(bookings => bookings._id !== id)
+            const remaining = bookings.filter((b) => b._id !== id);
             setBookings(remaining);
-
           }
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   };
 
   return (
     <div className="max-w-7xl mx-auto">
-      <Banner title={"Product Details"}></Banner>
+      <Banner title={"Bookings"} />
 
       <div className="overflow-x-auto">
-        <table className="table-auto w-full border-collapse border border-gray-200 shadow-lg rounded-lg overflow-hidden">
-          <thead className="bg-gray-50 text-gray-700 uppercase text-sm font-semibold">
+        <table className="table-auto w-full border">
+          <thead>
             <tr>
-              <th className="px-4 py-3">
-                <label>
-                  <input type="checkbox" className="checkbox checkbox-sm" />
-                </label>
-              </th>
-              <th className="px-4 py-3 text-left">Name</th>
-              <th className="px-4 py-3 text-left">Service & Price</th>
-              <th className="px-4 py-3 text-left">Status</th>
-              <th className="px-4 py-3 text-left">Update</th>
+              <th></th>
+              <th>Name</th>
+              <th>Service</th>
+              <th>Status</th>
+              <th>Update</th>
             </tr>
           </thead>
 
           <tbody>
             {bookings.map((booking) => (
-              <BookingRow key={booking._id} booking={booking} handleDelete={handleDelete} handleBookingConfirme={handleBookingConfirme}/>
+              <BookingRow
+                key={booking._id}
+                booking={booking}
+                handleDelete={handleDelete}
+                handleBookingConfirme={handleBookingConfirme}
+              />
             ))}
           </tbody>
         </table>
