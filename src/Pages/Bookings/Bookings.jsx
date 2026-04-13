@@ -3,38 +3,47 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { Banner } from "../../components/Banner/Banner";
 import BookingRow from "./BookingRow";
 import Swal from "sweetalert2";
-import axiosSecure from "../../api/axiosSecure";
+import axios from "axios";
 
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
 
-  // ✅ GET BOOKINGS
-  useEffect(() => {
-    if (!user?.email) return; // 🔥 important (user না আসা পর্যন্ত call না)
+  const url = `http://localhost:5000/booking?email=${user?.email}`;
 
-    axiosSecure
-      .get(`/booking?email=${user.email}`)
+  // ================= GET BOOKINGS =================
+  useEffect(() => {
+    if (!user?.email) return; // 🔥 FIX 1 (important)
+
+    axios
+      .get(url, { withCredentials: true }) // 🔥 FIX 2
       .then((res) => {
         setBookings(res.data);
       })
       .catch((err) => {
-        console.log("ERROR:", err);
+        console.log("GET ERROR:", err);
       });
   }, [user?.email]);
 
-  // ✅ UPDATE STATUS
+  // ================= CONFIRM =================
   const handleBookingConfirme = (id) => {
-    axiosSecure
-      .patch(`/booking/${id}`, { status: "completed" })
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
+    fetch(`http://localhost:5000/booking/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      credentials: "include", // 🔥 FIX 3 (VERY IMPORTANT)
+      body: JSON.stringify({ status: "completed" }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
           Swal.fire({
             title: "Confirm successful",
             icon: "success",
           });
 
-          // UI update safely
+          // UI update safe way
           const updatedBookings = bookings.map((b) =>
             b._id === id ? { ...b, status: "completed" } : b
           );
@@ -42,22 +51,23 @@ const Bookings = () => {
           setBookings(updatedBookings);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
 
-  // ✅ DELETE
+  // ================= DELETE =================
   const handleDelete = (id) => {
-    const proceed = confirm("Are you sure you want to delete?");
+    const proceed = confirm(`Are You sure? you want to delete.`);
 
     if (proceed) {
-      axiosSecure
-        .delete(`/booking/${id}`)
-        .then((res) => {
-          if (res.data.deletedCount > 0) {
+      fetch(`http://localhost:5000/booking/${id}`, {
+        method: "DELETE",
+        credentials: "include", // 🔥 FIX 4 (VERY IMPORTANT)
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.deletedCount > 0) {
             Swal.fire({
-              title: "Deleted successfully",
+              title: "Deleted successful",
               icon: "success",
             });
 
@@ -65,25 +75,25 @@ const Bookings = () => {
             setBookings(remaining);
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => console.log(err));
     }
   };
 
   return (
     <div className="max-w-7xl mx-auto">
-      <Banner title={"Bookings"} />
+      <Banner title={"Product Details"} />
 
       <div className="overflow-x-auto">
-        <table className="table-auto w-full border">
-          <thead>
+        <table className="table-auto w-full border-collapse border border-gray-200 shadow-lg rounded-lg overflow-hidden">
+          <thead className="bg-gray-50 text-gray-700 uppercase text-sm font-semibold">
             <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Service</th>
-              <th>Status</th>
-              <th>Update</th>
+              <th className="px-4 py-3">
+                <input type="checkbox" className="checkbox checkbox-sm" />
+              </th>
+              <th className="px-4 py-3 text-left">Name</th>
+              <th className="px-4 py-3 text-left">Service & Price</th>
+              <th className="px-4 py-3 text-left">Status</th>
+              <th className="px-4 py-3 text-left">Update</th>
             </tr>
           </thead>
 
