@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import ServiceCard from "./ServiceCard";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ServiceCard from "./ServiceCard";
 
 const Services = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/services")
+    fetch("https://car-doctor-server-production-153a.up.railway.app/services")
       .then((res) => res.json())
       .then((data) => {
         // শুধু প্রথম ৩টি সার্ভিস দেখাবে হোম পেজে

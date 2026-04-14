@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ServiceCard from "../../../components/Services/ServiceCard";
 
 const AllServices = () => {
@@ -9,7 +9,7 @@ const AllServices = () => {
   useEffect(() => {
     const abortController = new AbortController();
 
-    fetch("http://localhost:5000/services", { signal: abortController.signal })
+    fetch("https://car-doctor-server-production-153a.up.railway.app/services", { signal: abortController.signal })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch services");

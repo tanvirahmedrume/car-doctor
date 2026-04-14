@@ -1,8 +1,7 @@
-import React from "react";
-import { Banner } from "../../components/Banner/Banner";
-import Forms from "../../components/Forms/Forms";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Banner } from "../../components/Banner/Banner";
+import Forms from "../../components/Forms/Forms";
 
 const Checkout = () => {
   const service = useLoaderData();
@@ -32,7 +31,7 @@ const Checkout = () => {
       status: "pending",
     };
 
-    fetch("http://localhost:5000/booking", {
+    fetch("https://car-doctor-server-production-153a.up.railway.app/booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(bookingData),

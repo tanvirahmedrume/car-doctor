@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
-import { Banner } from "../../components/Banner/Banner";
-import BookingRow from "./BookingRow";
-import Swal from "sweetalert2";
 import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { Banner } from "../../components/Banner/Banner";
+import { AuthContext } from "../../providers/AuthProvider";
+import BookingRow from "./BookingRow";
 
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
 
-  const url = `http://localhost:5000/booking?email=${user?.email}`;
+  const url = `https://car-doctor-server-production-153a.up.railway.app/booking?email=${user?.email}`;
 
   // ================= GET BOOKINGS =================
   useEffect(() => {
@@ -27,7 +27,7 @@ const Bookings = () => {
 
   // ================= CONFIRM =================
   const handleBookingConfirme = (id) => {
-    fetch(`http://localhost:5000/booking/${id}`, {
+    fetch(`https://car-doctor-server-production-153a.up.railway.app/booking/${id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -59,7 +59,7 @@ const Bookings = () => {
     const proceed = confirm(`Are You sure? you want to delete.`);
 
     if (proceed) {
-      fetch(`http://localhost:5000/booking/${id}`, {
+      fetch(`https://car-doctor-server-production-153a.up.railway.app/booking/${id}`, {
         method: "DELETE",
         credentials: "include", // 🔥 FIX 4 (VERY IMPORTANT)
       })

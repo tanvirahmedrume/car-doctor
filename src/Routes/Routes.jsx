@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Services from "../components/Services/Services";
 import Main from "../Layout/Main";
 import AddNewServices from "../Pages/AddNewServices/AddNewServices";
+import Bookings from "../Pages/Bookings/Bookings";
 import Checkout from "../Pages/Checkout/Checkout";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -9,7 +10,6 @@ import Notfound from "../Pages/NotFound/Notfound";
 import AllServices from "../Pages/Services/All Services/AllServices";
 import ServiceDetails from "../Pages/Services/ServiceDetails/ServiceDetails";
 import Signup from "../Pages/Signup/Signup";
-import Bookings from "../Pages/Bookings/Bookings";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 
 
@@ -42,12 +42,12 @@ const router = createBrowserRouter([
       {
         path: "/service/:id",
         element: <ServiceDetails></ServiceDetails>,
-        loader: ({params}) => fetch(`http://localhost:5000/services/${params.id}`)
+        loader: ({params}) => fetch(`https://car-doctor-server-production-153a.up.railway.app/services/${params.id}`)
       },
       {
         path: "/checkout/:id",
         element: <PrivateRoutes><Checkout></Checkout></PrivateRoutes>,
-        loader: ({params}) => fetch(`http://localhost:5000/services/${params.id}`)
+        loader: ({params}) => fetch(`https://car-doctor-server-production-153a.up.railway.app/services/${params.id}`)
       },
       {
         path: "/addnewservices",

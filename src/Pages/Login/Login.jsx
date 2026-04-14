@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
-import { FaGooglePlusG } from "react-icons/fa6";
+import axios from "axios";
+import { useContext } from "react";
 import { FaGithub } from "react-icons/fa";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FaGooglePlusG } from "react-icons/fa6";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from "../../../public/assets/images/login/login.svg";
 import { AuthContext } from "../../providers/AuthProvider";
-import axios from "axios";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
@@ -27,7 +27,7 @@ const Login = () => {
         const user = { email };
         console.log(loggedInUser);
         
-        axios.post("http://localhost:5000/jwt", user, {
+        axios.post("https://car-doctor-server-production-153a.up.railway.app/jwt", user, {
           withCredentials: true
         })
         .then(res =>{
